@@ -1,28 +1,71 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="characters">
+      <div
+        v-for="character in characters"
+        :key="character.id"
+        class="characters__item"
+      >
+        <img class="characters__image" :src="character.image" alt="" />
+        <p class="characters__name">{{ character.name }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import fetchCharacters from './api';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+
+  data() {
+    return {
+      characters: [],
+      page: 1,
+      maxPage: 1,
+      preventScroll: false,
+    };
+  },
+
+  async created() {
+    const data = await fetchCharacters(this.page);
+
+    this.maxPage = data.info.pages;
+    this.characters = data.results;
+  },
+
+  mounted() {
+    window.addEventListener('scroll', async () => {
+      const scrolled = window.innerHeight + window.scrollY;
+
+      if (scrolled >= document.body.offsetHeight && !this.preventScroll) {
+        this.preventScroll = true;
+        this.page++;
+        await this.loadCharacters(this.page);
+        this.preventScroll = false;
+      }
+    });
+  },
+
+  methods: {
+    async loadCharacters(page) {
+      if (page >= this.maxPage) {
+        return;
+      }
+
+      this.characters = [
+        ...this.characters,
+        ...(await fetchCharacters(page)).results,
+      ];
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.characters {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>
