@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import fetchCharacters from '@/api';
+import { fetchCharacters } from '@/api';
 
 export default {
   name: 'Characers',
@@ -72,10 +72,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.characters {
-  display: flex;
-  flex-wrap: wrap;
-}
-</style>

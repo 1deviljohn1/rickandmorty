@@ -7,4 +7,11 @@ const fetchCharacters = async (page = 1) => {
   return data;
 };
 
-export default fetchCharacters;
+const fetchCharacterById = async (id) => {
+  const query = `${API_CHARATERS_URL}/${id}`;
+  const res = await fetch(query);
+  const data = await res.json();
+  return data;
+};
+
+export { fetchCharacters, fetchCharacterById };
