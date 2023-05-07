@@ -1,24 +1,6 @@
 # rickandmorty
+Rick and morty Vue 2 application (vue-cli)
 
-## Project setup
-```
-npm install
-```
+An aptitude test for base Vue 2 knowledge
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Api getting from https://rickandmortyapi.com/
